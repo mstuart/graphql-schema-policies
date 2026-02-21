@@ -1,0 +1,30 @@
+{
+  "name": "graphql-schema-policies",
+  "version": "0.1.0",
+  "description": "Semantic GraphQL schema design policy enforcement for CI pipelines",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "graphql-policies": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --test"
+  },
+  "peerDependencies": {
+    "graphql": ">=16.0.0"
+  },
+  "devDependencies": {
+    "graphql": "^16.9.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "graphql",
+    "schema",
+    "linting",
+    "policies",
+    "ci"
+  ],
+  "license": "MIT"
+}
