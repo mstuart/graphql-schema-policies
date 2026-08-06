@@ -1,5 +1,14 @@
-# graphql-schema-policies
+<div align="center">
+  <img src="docs/assets/logo.svg" alt="graphql-schema-policies — Semantic GraphQL schema design policy enforcement for CI pipelines" width="720">
+</div>
 
+<p align="center"><strong>Semantic GraphQL schema design policy enforcement for CI pipelines</strong></p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/graphql-schema-policies"><img src="https://img.shields.io/npm/v/graphql-schema-policies?label=npm" alt="npm"></a>
+</p>
+
+---
 Semantic GraphQL schema design policy enforcement for CI pipelines. Goes beyond syntax linting to enforce design rules like "every mutation must return a result type" and "no String IDs."
 
 ## Problem
