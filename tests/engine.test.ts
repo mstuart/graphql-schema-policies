@@ -1,13 +1,13 @@
-import { describe, it } from 'node:test';
-import assert from 'node:assert/strict';
-import { buildSchema } from 'graphql';
-import { PolicyEngine, createPolicyEngine } from '../dist/engine.js';
-import { noStringIds } from '../dist/rules/no-string-ids.js';
-import { mutationsHaveResultType } from '../dist/rules/mutations-have-result-type.js';
-import { noNullableIdFields } from '../dist/rules/no-nullable-id-fields.js';
+import assert from "node:assert/strict";
+import { describe, it } from "node:test";
+import { buildSchema } from "graphql";
+import { createPolicyEngine, PolicyEngine } from "../dist/engine.js";
+import { mutationsHaveResultType } from "../dist/rules/mutations-have-result-type.js";
+import { noNullableIdFields } from "../dist/rules/no-nullable-id-fields.js";
+import { noStringIds } from "../dist/rules/no-string-ids.js";
 
-describe('PolicyEngine', () => {
-  it('aggregates violations from multiple rules', () => {
+describe("PolicyEngine", () => {
+  it("aggregates violations from multiple rules", () => {
     const schema = buildSchema(`
       type Query {
         user: User
@@ -28,7 +28,7 @@ describe('PolicyEngine', () => {
     assert.equal(result.passed, false);
   });
 
-  it('returns passed=true when no error-severity violations', () => {
+  it("returns passed=true when no error-severity violations", () => {
     const schema = buildSchema(`
       type Query {
         user: User
@@ -48,7 +48,7 @@ describe('PolicyEngine', () => {
     assert.equal(result.passed, true);
   });
 
-  it('passed is false when any error-severity violation exists', () => {
+  it("passed is false when any error-severity violation exists", () => {
     const schema = buildSchema(`
       type Query {
         user: User
@@ -71,7 +71,7 @@ describe('PolicyEngine', () => {
     assert.ok(result.errorCount > 0);
   });
 
-  it('passed is true when only warn-severity violations exist', () => {
+  it("passed is true when only warn-severity violations exist", () => {
     const schema = buildSchema(`
       type Query {
         users: [User]
@@ -85,14 +85,16 @@ describe('PolicyEngine', () => {
     const engine = createPolicyEngine({
       rules: [
         {
-          name: 'test-warn',
-          description: 'always warns',
-          severity: 'warn',
-          check: () => [{
-            rule: 'test-warn',
-            message: 'just a warning',
-            severity: 'warn' as const,
-          }],
+          check: () => [
+            {
+              message: "just a warning",
+              rule: "test-warn",
+              severity: "warn" as const,
+            },
+          ],
+          description: "always warns",
+          name: "test-warn",
+          severity: "warn",
         },
       ],
     });

@@ -1,23 +1,23 @@
-import { GraphQLSchema } from 'graphql';
+import type { GraphQLSchema } from "graphql";
 
 export interface PolicyRule {
-  name: string;
+  check: (schema: GraphQLSchema) => Violation[];
   description: string;
-  severity: 'error' | 'warn';
-  check(schema: GraphQLSchema): Violation[];
+  name: string;
+  severity: "error" | "warn";
 }
 
 export interface Violation {
-  rule: string;
-  typeName?: string;
   fieldName?: string;
   message: string;
-  severity: 'error' | 'warn';
+  rule: string;
+  severity: "error" | "warn";
+  typeName?: string;
 }
 
 export interface PolicyResult {
+  errorCount: number;
   passed: boolean;
   violations: Violation[];
-  errorCount: number;
   warnCount: number;
 }
