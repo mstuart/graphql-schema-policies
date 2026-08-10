@@ -2,6 +2,14 @@
   "name": "graphql-schema-policies",
   "version": "0.1.0",
   "description": "Semantic GraphQL schema design policy enforcement for CI pipelines",
+  "keywords": [
+    "graphql",
+    "schema",
+    "linting",
+    "policies",
+    "ci"
+  ],
+  "license": "MIT",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,12 +18,9 @@
   },
   "scripts": {
     "build": "tsc",
-    "test": "node --test",
     "check": "ultracite check",
-    "fix": "ultracite fix"
-  },
-  "peerDependencies": {
-    "graphql": ">=16.0.0"
+    "fix": "ultracite fix",
+    "test": "node --test"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.6",
@@ -24,12 +29,7 @@
     "typescript": "^5.0.0",
     "ultracite": "7.10.2"
   },
-  "keywords": [
-    "graphql",
-    "schema",
-    "linting",
-    "policies",
-    "ci"
-  ],
-  "license": "MIT"
+  "peerDependencies": {
+    "graphql": ">=16.0.0"
+  }
 }

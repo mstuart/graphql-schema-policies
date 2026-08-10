@@ -1,23 +1,33 @@
-import { GraphQLSchema, GraphQLObjectType, isObjectType, isNonNullType, GraphQLNamedType } from 'graphql';
-import { PolicyRule, Violation } from '../types.js';
+import {
+  type GraphQLNamedType,
+  type GraphQLObjectType,
+  type GraphQLSchema,
+  isNonNullType,
+  isObjectType,
+} from "graphql";
+import type { PolicyRule, Violation } from "../types.js";
 
-export function noStringIds(opts?: { severity?: 'error' | 'warn' }): PolicyRule {
-  const severity = opts?.severity ?? 'error';
+export function noStringIds(opts?: {
+  severity?: "error" | "warn";
+}): PolicyRule {
+  const severity = opts?.severity ?? "error";
 
   return {
-    name: 'no-string-ids',
-    description: 'Fields named "id" must use the ID scalar, not String',
-    severity,
+    // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: GraphQL schema traversal follows the nested schema structure.
     check(schema: GraphQLSchema): Violation[] {
       const violations: Violation[] = [];
       const typeMap = schema.getTypeMap();
 
       for (const [typeName, type] of Object.entries(typeMap)) {
-        if (typeName.startsWith('__') || !isObjectType(type)) continue;
+        if (typeName.startsWith("__") || !isObjectType(type)) {
+          continue;
+        }
 
         const fields = (type as GraphQLObjectType).getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
-          if (fieldName !== 'id') continue;
+          if (fieldName !== "id") {
+            continue;
+          }
 
           let innerType = field.type;
           if (isNonNullType(innerType)) {
@@ -25,13 +35,13 @@ export function noStringIds(opts?: { severity?: 'error' | 'warn' }): PolicyRule 
           }
 
           const namedType = innerType as GraphQLNamedType;
-          if ('name' in namedType && namedType.name === 'String') {
+          if ("name" in namedType && namedType.name === "String") {
             violations.push({
-              rule: 'no-string-ids',
-              typeName,
               fieldName,
               message: `${typeName}.id uses String instead of ID scalar`,
+              rule: "no-string-ids",
               severity,
+              typeName,
             });
           }
         }
@@ -39,5 +49,8 @@ export function noStringIds(opts?: { severity?: 'error' | 'warn' }): PolicyRule 
 
       return violations;
     },
+    description: 'Fields named "id" must use the ID scalar, not String',
+    name: "no-string-ids",
+    severity,
   };
 }
