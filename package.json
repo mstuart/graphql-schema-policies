@@ -16,6 +16,9 @@
   "bin": {
     "graphql-policies": "dist/cli.js"
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "tsc",
     "check": "ultracite check",
