@@ -83,8 +83,9 @@ noStringIds({ severity: 'warn' })
 ## Custom Rules
 
 ```typescript
-import { PolicyRule, Violation } from 'graphql-schema-policies';
-import { GraphQLSchema, isObjectType } from 'graphql';
+import { isObjectType } from 'graphql';
+import type { GraphQLSchema } from 'graphql';
+import type { PolicyRule, Violation } from 'graphql-schema-policies';
 
 function noFieldNamedData(): PolicyRule {
   return {
