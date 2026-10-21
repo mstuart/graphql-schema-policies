@@ -1,8 +1,4 @@
-import {
-  type GraphQLObjectType,
-  type GraphQLSchema,
-  isObjectType,
-} from "graphql";
+import { type GraphQLSchema, isInterfaceType, isObjectType } from "graphql";
 import type { PolicyRule, Violation } from "../types.js";
 
 export function deprecatedFieldsHaveReason(opts?: {
@@ -17,11 +13,14 @@ export function deprecatedFieldsHaveReason(opts?: {
       const typeMap = schema.getTypeMap();
 
       for (const [typeName, type] of Object.entries(typeMap)) {
-        if (typeName.startsWith("__") || !isObjectType(type)) {
+        if (
+          typeName.startsWith("__") ||
+          !(isObjectType(type) || isInterfaceType(type))
+        ) {
           continue;
         }
 
-        const fields = (type as GraphQLObjectType).getFields();
+        const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
           if (
             !field.deprecationReason &&
