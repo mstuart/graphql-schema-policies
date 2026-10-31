@@ -20,6 +20,7 @@ export function mutationsHaveResultType(opts?: {
         return violations;
       }
 
+      const rootName = mutationType.name;
       const fields = mutationType.getFields();
       for (const [fieldName, field] of Object.entries(fields)) {
         let returnType = field.type;
@@ -33,10 +34,10 @@ export function mutationsHaveResultType(opts?: {
             : String(returnType);
           violations.push({
             fieldName,
-            message: `Mutation.${fieldName} returns ${typeName} instead of an object type`,
+            message: `${rootName}.${fieldName} returns ${typeName} instead of an object type`,
             rule: "mutations-have-result-type",
             severity,
-            typeName: "Mutation",
+            typeName: rootName,
           });
         }
       }
