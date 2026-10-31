@@ -23,10 +23,10 @@ export function deprecatedFieldsHaveReason(opts?: {
         const fields = type.getFields();
         for (const [fieldName, field] of Object.entries(fields)) {
           if (
-            !field.deprecationReason &&
-            field.deprecationReason !== undefined
+            typeof field.deprecationReason === "string" &&
+            !field.deprecationReason.trim()
           ) {
-            // deprecationReason is set but empty string or null
+            // A deprecated field needs a non-blank reason.
             violations.push({
               fieldName,
               message: `${typeName}.${fieldName} is deprecated but has no reason`,
